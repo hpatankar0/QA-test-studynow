@@ -1,748 +1,195 @@
-\# GSP Test Strategy
+# GSP Test Strategy
 
+## QA Automation Strategy for a Configuration-First Student Recruitment Platform
 
+## 1. Overview
 
-\## QA Automation Strategy for a Configuration-First Student Recruitment Platform
+GSP is a configuration-first student recruitment platform supporting a 15-stage admissions lifecycle. It includes country-specific document checklists, agent commission rate cards, three roles (Admin, Staff and Agent), configuration-driven workflows, and a data-heavy SPA.
 
+Because configuration changes can affect workflow behaviour, the automation strategy must validate both the configuration and the business workflows affected by it.
 
+The objective is to detect workflow-breaking, permission and data-integrity issues before they reach users.
 
-\---
+---
 
+# 2. Priority Automation Journeys
 
+I would prioritize the following 10 journeys based on business impact, security risk and their ability to block the admissions lifecycle.
 
-\## 1. Overview
-
-
-
-GSP is a configuration-first student recruitment platform supporting a multi-stage admissions lifecycle.
-
-
-
-The platform includes:
-
-
-
-\- A 15-stage admissions lifecycle
-
-\- Country-specific document checklists
-
-\- Agent commission rate cards
-
-\- Three levels of permissions
-
-\- Configuration-driven workflows
-
-\- Data-heavy SPA behaviour
-
-
-
-Because configuration changes can affect workflow behaviour, the automation strategy must validate both:
-
-
-
-1\. The configuration itself
-
-2\. The business workflows affected by that configuration
-
-
-
-The primary objective is to detect workflow-breaking changes before they reach users.
-
-
-
-\---
-
-
-
-\# 2. Automation Priorities
-
-
-
-I would not automate every journey at the same priority.
-
-
-
-The first automation layer should focus on business-critical workflows where a failure could block an application, cause incorrect financial calculations, expose unauthorized functionality, or prevent an application from progressing.
-
-
-
-I would prioritize the following 10 journeys.
-
-
-
-\---
-
-
-
-\## Priority 0 — Critical Business Journeys
-
-
-
-\### 1. Create a Student/Application
-
-
-
-\*\*Priority:\*\* P0
-
-
-
-Validate that a new student/application can be created successfully with the required information.
-
-
-
-\### Why first?
-
-
-
-If application creation fails, the rest of the admissions lifecycle cannot proceed.
-
-
-
-\### Key validations
-
-
-
-\- Required fields
-
-\- Valid application creation
-
-\- Correct initial state/stage
-
-\- Data persistence
-
-\- Correct permissions
-
-
-
-\---
-
-
-
-\## 2. Move an Application Through the Admissions Lifecycle
-
-
-
-\*\*Priority:\*\* P0
-
-
-
-Validate representative transitions through the 15-stage admissions lifecycle.
-
-
-
-\### Key validations
-
-
-
-\- Valid stage transition
-
-\- Required data/documents before transition
-
-\- Invalid transition prevention
-
-\- Correct application state
-
-\- Persistence after refresh
-
-\- Correct permissions for stage changes
-
-
-
-\### Why P0?
-
-
-
-The admissions lifecycle is the core business workflow.
-
-
-
-A configuration change that breaks stage transitions could prevent applications from progressing.
-
-
-
-\---
-
-
-
-\## 3. Country-Specific Document Checklist
-
-
-
-\*\*Priority:\*\* P0
-
-
-
-Validate that the correct document requirements are applied based on the relevant country/application configuration.
-
-
-
-\### Key validations
-
-
-
-\- Correct country checklist
-
-\- Required vs optional documents
-
-\- Document upload/availability
-
-\- Missing document validation
-
-\- Checklist state persistence
-
-\- Correct behaviour after configuration changes
-
-
-
-\### Why P0?
-
-
-
-The assessment specifically identifies per-country document checklists as a core GSP feature.
-
-
-
-A checklist configuration change can directly affect application progression.
-
-
-
-\---
-
-
-
-\## 4. Permission and Authorization Controls
-
-
-
-\*\*Priority:\*\* P0
-
-
-
-Validate the three permission levels against critical operations.
-
-
-
-\### Key validations
-
-
-
-\- User can only access permitted functionality
-
-\- Unauthorized actions are rejected
-
-\- Restricted configuration changes are protected
-
-\- UI visibility matches permissions
-
-\- Backend/API authorization is also enforced
-
-
-
-\### Why P0?
-
-
-
-Permission failures can result in either:
-
-
-
-\- Security exposure
-
-\- Unauthorized business changes
-
-\- Users being blocked from legitimate operations
-
-
-
-\---
-
-
-
-\# Priority 1 — Important Business Workflows
-
-
-
-\## 5. Agent Commission Calculation
-
-
-
-\*\*Priority:\*\* P1
-
-
-
-Validate that agent commission behaviour follows the configured rate card.
-
-
-
-\### Key validations
-
-
-
-\- Correct rate applied
-
-\- Correct agent/application relationship
-
-\- Rate-card configuration is respected
-
-\- Calculated result persists
-
-\- Changes to configuration affect future calculations correctly
-
-
-
-\### Why P1?
-
-
-
-Incorrect commission calculations can create financial and operational issues.
-
-
-
-\---
-
-
-
-\## 6. Application Document Submission and Validation
-
-
-
-\*\*Priority:\*\* P1
-
-
-
-Validate the document submission workflow after the relevant checklist has been applied.
-
-
-
-\### Key validations
-
-
-
-\- Required documents identified
-
-\- Valid documents accepted
-
-\- Missing required documents prevent invalid progression
-
-\- Document status is persisted
-
-\- Application state reflects document completion
-
-
-
-\---
-
-
-
-\## 7. Configuration Change Regression
-
-
-
-\*\*Priority:\*\* P1
-
-
-
-Validate that an administrative configuration change does not unexpectedly break existing workflows.
-
-
-
-Examples include:
-
-
-
-\- Checklist changes
-
-\- Stage-related configuration
-
-\- Commission rate configuration
-
-\- Permission configuration
-
-
-
-\### Why P1?
-
-
-
-GSP is configuration-first, meaning configuration changes can behave like code changes.
-
-
-
-Therefore, configuration changes require regression validation.
-
-
-
-\---
-
-
-
-\# Priority 2 — Supporting Workflows
-
-
-
-\## 8. Search, Filtering and Application Retrieval
-
-
-
-\*\*Priority:\*\* P2
-
-
-
-Validate that users can find and retrieve the correct applications.
-
-
-
-\### Key validations
-
-
-
-\- Search
-
-\- Filtering
-
-\- Pagination
-
-\- Application details
-
-\- Correct data returned
-
-\- Permission-based visibility
-
-
-
-\---
-
-
-
-\## 9. Application Updates
-
-
-
-\*\*Priority:\*\* P2
-
-
-
-Validate that permitted users can update application information without corrupting existing data.
-
-
-
-\### Key validations
-
-
-
-\- Editable fields
-
-\- Required field validation
-
-\- Persistence
-
-\- Existing data retained
-
-\- Permission enforcement
-
-
-
-\---
-
-
-
-\## 10. Notifications / Downstream Workflow Behaviour
-
-
-
-\*\*Priority:\*\* P2
-
-
-
-Where supported by the platform, validate important notifications or downstream actions triggered by application state/configuration changes.
-
-
-
-\### Key validations
-
-
-
-\- Trigger condition
-
-\- Correct recipient
-
-\- Correct application context
-
-\- No duplicate notification
-
-\- Failure handling
-
-
-
-\---
-
-
-
-\# 3. Prioritization Model
-
-
-
-The prioritization is based on business impact rather than simply technical complexity.
-
-
-
-| Priority | Focus | Reason |
-
+| Priority | Journey | Why it is important |
 |---|---|---|
+| P0 | 1. Create student/application | Entry point to the admissions lifecycle |
+| P0 | 2. Progress application through the 15-stage lifecycle | Core business workflow; failures can block admissions |
+| P0 | 3. Country-specific document checklist | Incorrect requirements can block or incorrectly progress applications |
+| P0 | 4. Role-based access and Agent student visibility | Security and data-isolation risk |
+| P1 | 5. Document upload and validation | Required documents directly affect progression |
+| P1 | 6. Offer / CAS / Visa progression | Critical downstream admissions stages |
+| P1 | 7. Agent commission rate card | Financial/business impact |
+| P1 | 8. Configuration-change regression | Configuration can change workflow behaviour like code |
+| P2 | 9. Application search and filtering | Operational users need correct, permission-based data |
+| P2 | 10. Application updates and downstream notifications | Important supporting workflow |
 
-| P0 | Application creation | Entry point to admissions |
+### 1. Create Student/Application — P0
 
-| P0 | Lifecycle/stage transitions | Core admissions workflow |
+Validate required fields, successful creation, initial application state, persistence and permission enforcement.
 
-| P0 | Country document checklist | Can block application progression |
+### 2. 15-Stage Admissions Lifecycle — P0
 
-| P0 | Permissions | Security and access control |
+Validate representative transitions from enquiry/application through offer, CAS/visa and enrolment. Verify prerequisites, valid/invalid transitions, state persistence and role permissions.
 
-| P1 | Agent commission | Financial/business impact |
+### 3. Country-Specific Document Checklist — P0
 
-| P1 | Document validation | Required for application progression |
+Validate that the correct checklist is applied for the destination country, including required/optional documents, missing-document validation and its effect on application progression.
 
-| P1 | Configuration regression | Configuration can change workflow behaviour |
+### 4. Role-Based Access and Agent Visibility — P0
 
-| P2 | Search/filtering | Important operational capability |
+Validate Admin, Staff and Agent permissions. An Agent must only be able to see and operate on their own students. Unauthorized UI and API requests must be rejected.
 
-| P2 | Application updates | Supporting business workflow |
+### 5. Document Upload and Validation — P1
 
-| P2 | Notifications | Important downstream behaviour |
+Validate document submission against the configured checklist and ensure missing required documents prevent invalid progression.
 
+### 6. Offer / CAS / Visa Progression — P1
 
+Validate downstream stage transitions and their prerequisites after application and document requirements are satisfied.
 
-The P0 suite should be the minimum smoke/regression gate before a critical release or configuration change.
+### 7. Agent Commission Rate Card — P1
 
+Validate the configured rate, agent/application relationship, calculation accuracy and persistence.
 
+### 8. Configuration Regression — P1
 
-\---
+Validate that changes to document checklists, commission rates or permissions do not unexpectedly break existing workflows.
 
+### 9. Search and Filtering — P2
 
+Validate search, filtering, pagination and permission-based visibility of applications.
 
-\# 4. Three-Level Permission Model
+### 10. Application Updates / Notifications — P2
 
+Validate permitted updates, required-field rules, persistence and important downstream notifications where supported.
 
+The P0 suite should form the minimum smoke/release gate for critical releases and configuration changes.
 
-The assessment states that GSP has three levels of permissions but does not define the exact role names.
+---
 
+# 3. Three-Role Permission Model
 
+The assessment defines three GSP roles:
 
-For this strategy, I would use the following proposed mapping:
+- **Admin**
+- **Staff**
+- **Agent**
 
+A key requirement is that **Agents must only ever see their own students**.
 
+## Permission Matrix
 
-1\. \*\*Administrator\*\*
-
-2\. \*\*Operational User\*\*
-
-3\. \*\*Read-only User\*\*
-
-
-
-The actual production role names should be mapped to these categories when the application permission model is confirmed.
-
-
-
-\---
-
-
-
-\## Permission Matrix
-
-
-
-| Capability | Administrator | Operational User | Read-only User |
-
+| Capability | Admin | Staff | Agent |
 |---|---:|---:|---:|
-
-| View applications | Yes | Yes | Yes |
-
-| Search/filter applications | Yes | Yes | Yes |
-
-| Create application | Yes | Yes | No |
-
-| Update application | Yes | Yes | No |
-
-| Progress application stage | Yes | Yes | No |
-
-| Manage documents | Yes | Yes | No |
-
-| Modify country checklist | Yes | No | No |
-
+| View applications | Yes | Yes | Own students only |
+| Search/filter applications | Yes | Yes | Own students only |
+| Create application | Yes | Yes | Own students only |
+| Update application | Yes | Yes | Own students only |
+| Progress application stage | Yes | Yes | Own students only |
+| Manage documents | Yes | Yes | Own students only |
+| Modify country document checklist | Yes | No | No |
 | Manage commission configuration | Yes | No | No |
-
 | Manage permissions | Yes | No | No |
+| View other Agents' students | Yes | Yes | No |
 
-| Delete sensitive/business data | Yes | No | No |
+### Permission Test Approach
 
+Test permissions at both UI and API/backend levels:
 
+- Verify allowed controls and navigation are available.
+- Verify restricted controls/pages cannot be used.
+- Verify an Agent cannot view another Agent's students.
+- Attempt direct API access to restricted resources.
+- Verify unauthorized requests are rejected.
+- Verify unauthorized attempts do not change data.
 
-\---
+The UI must not be treated as the only security boundary.
 
+---
 
+# 4. Friday 5 PM Canada Checklist Change
 
-\## Permission Testing Approach
+An Admin changes Canada's document checklist at 5 PM on Friday. Because GSP is configuration-first, I would treat this change like a production code change.
 
+## What Could Break?
 
+### New Applications
 
-Permissions should be tested at two levels.
+- Wrong checklist assigned to Canada.
+- Required document missing or incorrectly added.
+- Incorrect country mapping.
 
+### Existing Applications
 
+- Existing applications unexpectedly receiving new requirements.
+- Completed applications becoming incomplete.
+- Existing document status being recalculated incorrectly.
+- Application state changing unexpectedly.
 
-\### UI Level
+### Stage Progression
 
+A checklist change could prevent an application from progressing because a newly required document is missing.
 
+### Permissions
 
-Verify:
+Only Admin should be able to change the checklist. Staff and Agent must not be able to modify it or bypass the restriction through the API.
 
+### Downstream Workflows
 
+Potential impact should be checked in:
 
-\- Restricted controls are hidden/disabled where appropriate
+- Document validation
+- Application progression
+- Agent/Staff workflows
+- Search/filtering
+- Relevant reporting
+- Notifications
 
-\- Unauthorized pages cannot be accessed
+## How Automation Catches It Before Monday
 
-\- Authorized controls are available
+I would maintain controlled data for both:
 
-\- Navigation respects permissions
+**Existing application:** created before the configuration change.
 
+**New application:** created after the configuration change.
 
+After the change, the automated regression gate would validate:
 
-\### API/Backend Level
+1. Canada checklist configuration is correct.
+2. New Canadian applications receive the expected checklist.
+3. Existing applications behave according to the defined business rule.
+4. Required documents are correctly enforced.
+5. Valid applications can continue through the expected stages.
+6. Invalid/incomplete applications are correctly blocked.
+7. Admin/Staff/Agent permissions remain correct.
+8. Agent data isolation is preserved.
+9. Relevant downstream workflows remain functional.
 
+The P0 suite would be the minimum release gate. If a critical check fails, the configuration should not be considered safe for Monday.
 
+---
 
-Verify:
+# 5. Stability Strategy for a Data-Heavy SPA
 
+## Data Isolation
 
+Each test should create or obtain its own data. Tests must not depend on records created by another test.
 
-\- Unauthorized requests are rejected
+Use unique identifiers for students/applications and avoid shared mutable state.
 
-\- Direct API calls cannot bypass UI restrictions
+## API-Driven Setup
 
-\- Correct HTTP authorization response is returned
+Use APIs to create prerequisite data wherever possible rather than navigating through the UI. This keeps UI tests focused on UI/business behaviour and makes the suite faster.
 
-\- Data remains unchanged after unauthorized attempts
+## Reliable Waits
 
+Avoid fixed sleeps such as:
 
-
-The UI should never be considered the only security boundary.
-
-
-
-\---
-
-
-
-\# 5. Friday 5 PM Canada Checklist Change Scenario
-
-
-
-\## Scenario
-
-
-
-An administrator changes the Canadian document checklist at 5 PM on Friday.
-
-
-
-Because GSP is configuration-first, this change should be treated similarly to a production code change.
-
-
-
-A configuration change can affect existing applications and downstream workflows.
-
-
-
-\---
-
-
-
-\# 6. What Could Break?
-
-
-
-I would investigate the following areas.
-
-
-
-\## 6.1 New Applications
-
-
-
-New Canadian applications may receive the updated checklist.
-
-
-
-Potential failures:
-
-
-
-\- Incorrect documents assigned
-
-\- Missing required document
-
-\- Unexpected additional requirement
-
-\- Incorrect country mapping
-
-
-
-\---
-
-
-
-\## 6.2 Existing Applications
-
-
-
-Existing applications may behave differently depending on how checklist configuration is applied.
-
-
-
-Potential failures:
-
-
-
-\- Existing applications unexpectedly receiving new requirements
-
-\- Existing required documents becoming optional
-
-\- Previously completed applications becoming incomplete
-
-\- Incorrect application state
-
-
-
-\---
-
-
-
-\## 6.3 Application Stage Transitions
-
-
-
-A checklist change could affect whether an application is allowed to progress.
-
-
-
-Potential failures:
-
-
-
-```text
-
-Application
-
-&#x20;   ↓
-
-Required document check
-
-&#x20;   ↓
-
-Document missing
-
-&#x20;   ↓
-
-Stage transition blocked
-
+```typescript
+await page.waitForTimeout(5000);
