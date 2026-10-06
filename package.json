@@ -1,0 +1,30 @@
+{
+  "name": "conduit-qa-automation",
+  "version": "1.0.0",
+  "description": "Playwright automation framework for the Conduit QA Engineer assessment",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:e2e": "playwright test tests/e2e",
+    "test:api": "playwright test tests/api",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:report": "playwright show-report",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "playwright",
+    "qa",
+    "automation",
+    "e2e",
+    "api-testing"
+  ],
+  "author": "Hema Patankar",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.6.4",
+    "typescript": "^7.0.2"
+  }
+}
